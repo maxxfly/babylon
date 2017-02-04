@@ -34,11 +34,11 @@ ActiveRecord::Schema.define(version: 20170204184129) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer  "code"
+    t.integer  "product_code"
     t.integer  "name"
-    t.integer  "prices"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "price"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "promotional_rules", force: :cascade do |t|

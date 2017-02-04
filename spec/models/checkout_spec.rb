@@ -24,15 +24,16 @@ RSpec.describe Checkout do
 
   let(:promotional_rule_1) do
     create(:promotional_rule,
-           trigger_sum: 60,
+           item_id: nil,
+           trigger_sum: 6000,
            reduction_percentage: 10)
   end
 
-  let(:promonation_rule_2) do
+  let(:promotional_rule_2) do
     create(:promotional_rule,
-           item_id: item_2.id,
+           item_id: item_1.id,
            trigger_count: 2,
-           reduction_fixed: item_2.price - 850)
+           reduction_fixed: item_1.price - 850)
   end
 
   let(:promotional_rules) do

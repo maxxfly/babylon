@@ -16,41 +16,33 @@ require 'rails_helper'
 
 RSpec.describe PromotionalRule, type: :model do
   context "reduction_percentage is already defined" do
-    before { allow(subject).to receive(:reduction_percentage).and_return(10) }
+    before { allow(subject).to receive(:reduction_percentage?).and_return(true) }
     it { is_expected.not_to validate_presence_of(:reduction_fixed) }
   end
 
   context "reduction_percentage is empty" do
-    before { allow(subject).to receive(:reduction_percentage).and_return(nil) }
+    before { allow(subject).to receive(:reduction_percentage?).and_return(false) }
     it { is_expected.to validate_presence_of(:reduction_fixed) }
   end
 
   context "item_id is already defined" do
-    before { allow(subject).to receive(:item_id).and_return(1) }
+    before { allow(subject).to receive(:item_id?).and_return(true) }
     it { is_expected.to validate_presence_of(:trigger_count) }
   end
 
   context "item_id is empty" do
-    before { allow(subject).to receive(:item_id).and_return(nil) }
+    before { allow(subject).to receive(:item_id?).and_return(false) }
     it { is_expected.not_to validate_presence_of(:trigger_count) }
   end
 
-  context "empty item_id and trigger_count are incompatible" do
-    let(:promotional_rule) { create(:promotional_rule, trigger_count: 10) }
-    it { expect(promotional_rule).not_to be_valid }
-    it { expect(promotional_rule.errors[:trigger_count]).to be }
-  end
-
   context "trigger_sum and trigger_count are incompatible" do
-    let(:promotional_rule) { create(:promotional_rule, trigger_count: 10, trigger_sum: 10) }
-    it { expect(promotional_rule).not_to be_valid }
-    it { expect(promotional_rule.errors[:trigger_count]).to be }
+    before { allow(subject).to receive(:trigger_count?).and_return(true) }
+    it { is_expected.to validate_absence_of(:trigger_sum) }
   end
 
   context "reduction_percentage and reduction_fixed are incompatible" do
-    let(:promotional_rule) { create(:promotional_rule, reduction_fixed: 10, reduction_percentage: 10) }
-    it { expect(promotional_rule).not_to be_valid }
-    it { expect(promotional_rule.errors[:reduction_fixed]).to be }
+    before { allow(subject).to receive(:reduction_percentage?).and_return(true) }
+    it { is_expected.to validate_absence_of(:reduction_fixed) }
   end
 
 end
